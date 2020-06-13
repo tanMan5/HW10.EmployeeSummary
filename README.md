@@ -24,6 +24,8 @@
 
   When you type app.js into the terminal, the questons will appear and user will give answers that will create the team template.
 
+  I was not able to get my intern or engineer questons to work which resulted in not being able to render the HTML page.
+
   ## License
 
   none
