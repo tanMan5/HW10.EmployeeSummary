@@ -9,6 +9,8 @@ const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
+const teamMembers = [];
+
 
 
 // Write code to use inquirer to gather information about the development team members,
@@ -90,6 +92,38 @@ function appPrompt() {
         ]);
     };
 };
+
+function createNext() {
+    return inquirer.prompt([
+        {
+            type: "list",
+            name: "addEmployee",
+            message: "Which team member would you like to add?",
+            choices: ['Intern', 'Engineer', 'I do not need to add anymore team members.']
+        }
+    ]);
+};
+
+function employee() {
+    createNext().then(function (res) {
+        if (res.addEmployee === 'Intern') {
+            createIntern().then(function (res) {
+                const intern = new Intern(res.name, res.id, res.email, res.school);
+                teamMembers.push(intern);
+                createNext();
+            });
+        } else if (res.addEmployee === 'Enineer') {
+            createEngineer()..then(function (res) {
+                const engineer = new Engineer(res.name, res.id, res.email, res.gitHub);
+                teamMembers.push(engineer);
+                createNext();
+            });
+        } else {
+            //console.log("Team members up to date.");
+            var createTeam = render(teamMembers)
+        }
+    })
+}
 
 
 
