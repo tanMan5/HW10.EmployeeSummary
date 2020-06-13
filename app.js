@@ -113,17 +113,39 @@ function employee() {
                 createNext();
             });
         } else if (res.addEmployee === 'Enineer') {
-            createEngineer()..then(function (res) {
+            createEngineer().then(function (res) {
                 const engineer = new Engineer(res.name, res.id, res.email, res.gitHub);
                 teamMembers.push(engineer);
                 createNext();
             });
         } else {
             //console.log("Team members up to date.");
-            var createTeam = render(teamMembers)
-        }
-    })
-}
+            var teamHTML = render(teamMembers);
+            writeToFile(OUTPUT_DIR, outputPath, HTML);
+        };
+    });
+};
+
+createManager().then(function (res) {
+    const manager = new Manager(res.name, res. id, res.email, res.officeNumber);
+    teamMembers.push(manager);
+    createNext();
+});
+
+function writeToFile(directory, fileName, data) {
+    if (!fs.existsSync(directory)) {
+        fs.mkdirSync(directory);
+
+    };
+    fs.writeFile(fileName, data, function(err){
+        if(err) {
+            return console.log(error);
+        };
+        
+    });
+};
+
+
 
 
 
