@@ -16,9 +16,8 @@ const teamMembers = [];
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 
-function appPrompt() {
-    function createManager() {
-        inquirer.prompt([
+function createManager() {
+       return inquirer.prompt([
             {
                 type: "input",
                 name: "name",
@@ -43,7 +42,7 @@ function appPrompt() {
     };
 
     function createEngineer() {
-        inquirer.prompt([
+        return inquirer.prompt([
             {
                 type: "input",
                 name: "name",
@@ -61,7 +60,7 @@ function appPrompt() {
             },
             {
                 type: "input",
-                name: "gitHub",
+                name: "github",
                 message: "What is the engineer's GitHub username?",
             }
         ]);
@@ -82,7 +81,7 @@ function appPrompt() {
             {
                 type: "input",
                 name: "email",
-                message: "What is the intern's  email?",
+                message: "What is the intern's email?",
             },
             {
                 type: "input",
@@ -91,7 +90,7 @@ function appPrompt() {
             }
         ]);
     };
-};
+
 
 function createNext() {
     return inquirer.prompt([
@@ -103,20 +102,20 @@ function createNext() {
         }
     ]);
 };
-
+// need to fix
 function employee() {
     createNext().then(function (res) {
         if (res.addEmployee === 'Intern') {
             createIntern().then(function (res) {
                 const intern = new Intern(res.name, res.id, res.email, res.school);
                 teamMembers.push(intern);
-                createNext();
+                employee();
             });
         } else if (res.addEmployee === 'Enineer') {
             createEngineer().then(function (res) {
-                const engineer = new Engineer(res.name, res.id, res.email, res.gitHub);
+                const engineer = new Engineer(res.name, res.id, res.email, res.github);
                 teamMembers.push(engineer);
-                createNext();
+                employee();
             });
         } else {
             //console.log("Team members up to date.");
@@ -127,9 +126,9 @@ function employee() {
 };
 
 createManager().then(function (res) {
-    const manager = new Manager(res.name, res. id, res.email, res.officeNumber);
+    const manager = new Manager(res.name, res.id, res.email, res.officeNumber);
     teamMembers.push(manager);
-    createNext();
+    employee();
 });
 
 function writeToFile(directory, fileName, data) {
